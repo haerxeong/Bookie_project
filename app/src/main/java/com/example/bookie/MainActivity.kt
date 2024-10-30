@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Use View Binding to access the button
+
         binding.publishButton.setOnClickListener {
             Toast.makeText(this, "독서일기가 발행되었습니다!", Toast.LENGTH_SHORT).show()
         }
