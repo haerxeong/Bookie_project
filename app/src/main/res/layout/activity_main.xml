@@ -1,19 +1,114 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- 헤더 텍스트 -->
     <TextView
+        android:id="@+id/headerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="sans-serif-medium"
+        android:text="독서일기 작성"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 발행 버튼 -->
+    <Button
+        android:id="@+id/publishButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#8B5B5B"
+        android:padding="8dp"
+        android:text="발행"
+        android:textColor="#FFFFFF" />
+
+    <!-- 책 정보 전체를 감싸는 박스 -->
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_box"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <!-- 책 제목 (가로 중앙 정렬) -->
+        <TextView
+            android:id="@+id/bookTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="채식주의자"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <!-- 책 사진 (가로 중앙 정렬) -->
+        <ImageView
+            android:id="@+id/bookImage"
+            android:layout_width="95dp"
+            android:layout_height="132dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:contentDescription="Book Cover Image"
+            android:src="@drawable/vegetarian" />
+
+        <!-- 책 정보 (가로로 일직선 배치) -->
+        <TextView
+            android:id="@+id/bookInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:layout_marginTop="8dp"
+            android:text="한강 | 창비 | 2022년 3월"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- 독서일자 텍스트 -->
+    <TextView
+        android:id="@+id/readingDateLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="독서 일자"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- 독서일자 입력 폼 -->
+    <EditText
+        android:id="@+id/readingDateInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#D3D3D3"
+        android:hint="날짜를 입력하세요(YYMMDD)"
+        android:inputType="date" />
+
+    <!-- 독서일기 텍스트 -->
+    <TextView
+        android:id="@+id/diaryContentLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="독서 일기"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- 독서일기 입력 폼 -->
+    <EditText
+        android:id="@+id/diaryContentInput"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#D3D3D3"
+        android:gravity="start|top"
+        android:hint="이 책을 읽으며 떠오른 생각이나 감정, 당시의 상황을 자유롭게 적어보세요. 책 속의 순간들을 나만의 방식으로 기록해보는 시간입니다."
+        android:inputType="textMultiLine" />
+</LinearLayout>
