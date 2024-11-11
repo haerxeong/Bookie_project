@@ -5,20 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentUnreadBookBinding
+import com.example.bookie.viewmodel.BookViewModel
 
-class UnreadBookFragment : Fragment() {
+class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener {
+    val viewModel: BookViewModel by activityViewModels()
 
     private lateinit var binding: FragmentUnreadBookBinding
-    private val unreadBooks = arrayOf(
-        MyBook("불편한 편의점", "김호연", "나무옆의자", 2021),
-        MyBook("호밀밭의 파수꾼", "제롬 데이비드 샐린저", "민음사", 2023),
-        MyBook("채식주의자", "한강", "창비", 2022),
-        MyBook("코스모스", "칼 세이건", "사이언스북스", 2006),
-        MyBook("물고기는 존재하지 않는다", "룰루 밀러", "곰출판", 2021)
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +28,15 @@ class UnreadBookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // RecyclerView 설정
+        binding.recUnreadBooks.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.unreadBooks.observe(viewLifecycleOwner) { books ->
+            books?.let {
+                binding.recUnreadBooks.adapter = UnreadBooksAdapter(it.toTypedArray(), this)
+            }
+        }
+
         // 버튼 이동 설정
         binding.btnRead.setOnClickListener {
             findNavController().navigate(R.id.action_unreadBookFragment_to_readBookFragment)
@@ -39,9 +44,9 @@ class UnreadBookFragment : Fragment() {
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_unreadBookFragment_to_addUnreadBookFragment)
         }
+    }
 
-        // RecyclerView 설정
-        binding.recUnreadBooks.layoutManager = LinearLayoutManager(requireContext())
-        binding.recUnreadBooks.adapter = UnreadBooksAdapter(unreadBooks)
+    override fun onSetReadClick(unreadbook: MyBook) {
+        viewModel.setIsRead(unreadbook.id)  // btnSetRead가 클릭될 때 호출 -> setIsRead 호출
     }
 }

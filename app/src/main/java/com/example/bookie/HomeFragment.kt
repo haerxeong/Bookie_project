@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentHomeBinding
+import com.example.bookie.viewmodel.BookViewModel
 
 class HomeFragment : Fragment() {
+    val viewModel: BookViewModel by activityViewModels()
     var binding: FragmentHomeBinding? = null // private으로 해야하나?
+    /*
     private val books: Array<MyBook> = arrayOf(
         MyBook("불편한 편의점", "김호연", "나무옆의자", 2021),
         MyBook("호밀밭의 파수꾼", "제롬 데이비드 샐린저", "민음사", 2023),
@@ -18,6 +22,8 @@ class HomeFragment : Fragment() {
         MyBook("코스모스", "칼 세이건", "사이언스북스", 2006),
         MyBook("물고기는 존재하지 않는다", "룰루 밀러", "곰출판", 2021)
     )
+
+     */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +40,12 @@ class HomeFragment : Fragment() {
 
         // RecyclerView 설정
         binding?.bookList?.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.bookList?.adapter = BookAdapter(books.toList())
+
+        viewModel.unreadBooks.observe(viewLifecycleOwner) { books ->
+            books?.let {
+                binding?.bookList?.adapter = BookAdapter(it)
+            }
+        }
     }
 
     override fun onDestroyView() {
