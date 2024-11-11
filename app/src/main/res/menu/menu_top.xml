@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/baseline_home"
+        android:title="홈" />
+    <item
+        android:id="@+id/feedFragment"
+        android:icon="@drawable/baseline_feed"
+        android:title="피드" />
+    <item
+        android:id="@+id/unreadBookFragment"
+        android:icon="@drawable/baseline_menu_book"
+        android:title="내서재" />
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="관리" />
+</menu>
