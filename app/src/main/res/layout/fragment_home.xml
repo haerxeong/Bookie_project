@@ -9,6 +9,7 @@
     <!-- 검색창 -->
 
     <!-- 인사말 텍스트 -->
+
     <EditText
         android:id="@+id/search_bar"
         android:layout_width="0dp"
@@ -66,6 +67,7 @@
         app:layout_constraintTop_toBottomOf="@id/goal_ring" />
 
     <!-- 미션 레이아웃 -->
+
     <LinearLayout
         android:id="@+id/mission_layout"
         android:layout_width="0dp"
@@ -99,6 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="미션 시작하기" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
