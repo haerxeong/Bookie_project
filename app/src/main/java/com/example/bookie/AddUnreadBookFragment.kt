@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.bookie.databinding.FragmentAddUnreadBookBinding
+import com.example.bookie.databinding.FragmentUnreadBookBinding
 
 
 class AddUnreadBookFragment : Fragment() {
+    private lateinit var binding: FragmentAddUnreadBookBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +28,17 @@ class AddUnreadBookFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_unread_book, container, false)
+        binding = FragmentAddUnreadBookBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 버튼 이동 설정
+        binding.btnUpload.setOnClickListener {
+            findNavController().navigate(R.id.action_addUnreadBookFragment_to_unreadBookFragment)
+        }
     }
 /*
     companion object {

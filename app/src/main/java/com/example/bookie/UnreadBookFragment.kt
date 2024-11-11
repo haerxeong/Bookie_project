@@ -36,6 +36,9 @@ class UnreadBookFragment : Fragment() {
         binding.btnRead.setOnClickListener {
             findNavController().navigate(R.id.action_unreadBookFragment_to_readBookFragment)
         }
+        binding.btnAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_unreadBookFragment_to_addUnreadBookFragment)
+        }
 
         // RecyclerView 설정
         binding.recUnreadBooks.layoutManager = LinearLayoutManager(requireContext())
