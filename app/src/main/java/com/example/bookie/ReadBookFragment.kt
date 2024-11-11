@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bookie.databinding.FragmentUnreadBookBinding
+import com.example.bookie.databinding.FragmentReadBookBinding
 
-class UnreadBookFragment : Fragment() {
+class ReadBookFragment : Fragment() {
 
-    private lateinit var binding: FragmentUnreadBookBinding
-    private val unreadBooks = arrayOf(
-        MyBook("불편한 편의점", "김호연", "나무옆의자", 2021),
+    private lateinit var binding: FragmentReadBookBinding
+    private val readBooks = arrayOf(
         MyBook("호밀밭의 파수꾼", "제롬 데이비드 샐린저", "민음사", 2023),
         MyBook("채식주의자", "한강", "창비", 2022),
         MyBook("코스모스", "칼 세이건", "사이언스북스", 2006),
@@ -25,7 +24,7 @@ class UnreadBookFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // View 바인딩 초기화
-        binding = FragmentUnreadBookBinding.inflate(inflater, container, false)
+        binding = FragmentReadBookBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -33,12 +32,12 @@ class UnreadBookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 버튼 이동 설정
-        binding.btnRead.setOnClickListener {
-            findNavController().navigate(R.id.action_unreadBookFragment_to_readBookFragment)
+        binding?.btnUnread?.setOnClickListener {
+            findNavController().navigate(R.id.action_readBookFragment_to_unreadBookFragment)
         }
 
         // RecyclerView 설정
-        binding.recUnreadBooks.layoutManager = LinearLayoutManager(requireContext())
-        binding.recUnreadBooks.adapter = UnreadBooksAdapter(unreadBooks)
+        binding.recReadBooks.layoutManager = LinearLayoutManager(requireContext())
+        binding.recReadBooks.adapter = ReadBooksAdapter(readBooks)
     }
 }

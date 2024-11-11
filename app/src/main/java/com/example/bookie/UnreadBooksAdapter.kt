@@ -22,7 +22,7 @@ class UnreadBooksAdapter(val unreadbooks: Array<MyBook>): RecyclerView.Adapter<U
 
     class Holder(private val binding: ListUnreadbooksBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(unreadbook: MyBook) {
-            binding.imageView.setImageResource(R.drawable.bookcover1)
+            binding.imageView.setImageResource(R.drawable.book)
             binding.txtTitle.text = unreadbook.title
             binding.txtAuthor.text = unreadbook.author
             binding.txtPublisher.text = unreadbook.publisher

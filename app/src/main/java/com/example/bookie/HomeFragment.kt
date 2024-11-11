@@ -11,7 +11,7 @@ import com.example.bookie.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     var binding: FragmentHomeBinding? = null // private으로 해야하나?
-    private val unreadBooks = arrayOf(
+    private val books: Array<MyBook> = arrayOf(
         MyBook("불편한 편의점", "김호연", "나무옆의자", 2021),
         MyBook("호밀밭의 파수꾼", "제롬 데이비드 샐린저", "민음사", 2023),
         MyBook("채식주의자", "한강", "창비", 2022),
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
         // RecyclerView 설정
         binding?.bookList?.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.bookList?.adapter = UnreadBooksAdapter(unreadBooks)
+        binding?.bookList?.adapter = BookAdapter(books.toList())
     }
 
     override fun onDestroyView() {
