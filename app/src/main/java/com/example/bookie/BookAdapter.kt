@@ -6,30 +6,26 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bookie.databinding.ListHomeBookItemBinding
+import com.example.bookie.databinding.ListUnreadbooksBinding
 
-class BookAdapter(private val books: List<MyBook>) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
-
-    class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val bookImageView: ImageView = itemView.findViewById(R.id.book_image)
-        val titleTextView: TextView = itemView.findViewById(R.id.book_title)
-        val authorTextView: TextView = itemView.findViewById(R.id.book_author)
-        val publisherTextView: TextView = itemView.findViewById(R.id.book_publisher)
-        val yearTextView: TextView = itemView.findViewById(R.id.book_release)
+class BookAdapter(private val books: List<MyBook>) : RecyclerView.Adapter<BookAdapter.Holder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val binding = ListHomeBookItemBinding.inflate(LayoutInflater.from(parent.context))
+        return Holder(binding)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_home_book_item, parent, false)
-        return BookViewHolder(view)
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        holder.bind(books[position])
     }
 
-    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book = books[position]
-        holder.titleTextView.text = book.title
-        holder.authorTextView.text = book.author
-        holder.publisherTextView.text = book.publisher
-        holder.yearTextView.text = book.release.toString()
-        // Set the book image if available
-        // holder.bookImageView.setImageResource(book.imageResId)
+    class Holder(private val binding: ListHomeBookItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(books: MyBook) {
+            binding.bookImage.setImageResource(R.drawable.book)
+            binding.bookTitle.text = books.title
+            binding.bookAuthor.text = books.author
+            binding.bookRelease.text = books.release.toString()
+        }
     }
 
     override fun getItemCount(): Int {
