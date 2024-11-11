@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/unreadBookFragment"
-        android:name="com.example.bookie.unreadBookFragment"
+        android:name="com.example.bookie.UnreadBookFragment"
         android:label="fragment_unread_book"
         tools:layout="@layout/fragment_unread_book" >
         <action

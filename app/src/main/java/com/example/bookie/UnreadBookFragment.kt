@@ -1,16 +1,16 @@
 package com.example.bookie
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bookie.databinding.FragmentHomeBinding
+import com.example.bookie.databinding.FragmentUnreadBookBinding
 
-class HomeFragment : Fragment() {
-    var binding: FragmentHomeBinding? = null // private으로 해야하나?
+class UnreadBookFragment : Fragment() {
+
+    private lateinit var binding: FragmentUnreadBookBinding
     private val unreadBooks = arrayOf(
         MyBook("불편한 편의점", "김호연", "나무옆의자", 2021),
         MyBook("호밀밭의 파수꾼", "제롬 데이비드 샐린저", "민음사", 2023),
@@ -23,22 +23,15 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater)
-
-        // Inflate the layout for this fragment
-        return binding?.root
+        // View 바인딩 초기화
+        binding = FragmentUnreadBookBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // RecyclerView 설정
-        binding?.bookList?.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.bookList?.adapter = UnreadBooksAdapter(unreadBooks)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+        binding.recUnreadBooks.layoutManager = LinearLayoutManager(requireContext())
+        binding.recUnreadBooks.adapter = UnreadBooksAdapter(unreadBooks)
     }
 }
