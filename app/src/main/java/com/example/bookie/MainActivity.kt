@@ -1,5 +1,5 @@
 package com.example.bookie
-//변경테스트
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment

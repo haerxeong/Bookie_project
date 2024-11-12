@@ -29,6 +29,27 @@
         <action
             android:id="@+id/action_homeFragment_to_unreadBookFragment"
             app:destination="@id/unreadBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_missionWritingFragment"
+            app:destination="@id/missionWritingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/missionWritingFragment"
+        android:name="com.example.bookie.MissionWritingFragment"
+        android:label="fragment_mission_writing"
+        tools:layout="@layout/fragment_mission_writing" >
+        <action
+            android:id="@+id/action_missionWritingFragment_to_rewardCookieFragment"
+            app:destination="@id/rewardCookieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardCookieFragment"
+        android:name="com.example.bookie.RewardCookieFragment"
+        android:label="fragment_reward_cookie"
+        tools:layout="@layout/fragment_reward_cookie">
+        <action
+            android:id="@+id/action_rewardCookieFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/unreadBookFragment"
@@ -50,6 +71,19 @@
         <action
             android:id="@+id/action_readBookFragment_to_unreadBookFragment"
             app:destination="@id/unreadBookFragment" />
+        <action
+            android:id="@+id/action_readBookFragment_to_bookDiaryWriteFragment"
+            app:destination="@id/bookDiaryWriteFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/bookDiaryWriteFragment"
+        android:name="com.example.bookie.BookDiaryWriteFragment"
+        android:label="fragment_book_diary_write"
+        tools:layout="@layout/fragment_book_diary_write">
+        <action
+            android:id="@+id/action_bookDiaryWriteFragment_to_readBookFragment"
+            app:destination="@id/readBookFragment" />
     </fragment>
     <fragment
         android:id="@+id/addUnreadBookFragment"

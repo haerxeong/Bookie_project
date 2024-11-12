@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
+//import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentHomeBinding
 import com.example.bookie.viewmodel.BookViewModel
 
@@ -45,6 +46,9 @@ class HomeFragment : Fragment() {
             books?.let {
                 binding?.bookList?.adapter = BookAdapter(it)
             }
+        }
+        binding?.btnStartMission?.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_missionWritingFragment)
         }
     }
 
