@@ -3,6 +3,9 @@
     <style name="Base.Theme.Bookie" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/mainColor</item> <!-- 메인 색상 설정 -->
+        <item name="colorPrimaryVariant">@color/mainColor</item> <!-- 필요시 색상 변형 적용 -->
+        <item name="colorOnPrimary">@android:color/white</item> <!-- Primary 색상의 텍스트 색상 -->
     </style>
 
     <style name="Theme.Bookie" parent="Base.Theme.Bookie" />

@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentBookFeedPageBinding
+import com.example.bookie.databinding.FragmentUnreadBookBinding
+import com.example.bookie.viewmodel.BookViewModel
+
 /*
 **inflate**는 XML 레이아웃 파일을 메모리에 로드하여 화면에 표시할 수 있는 View 객체로 만드는 과정.
  즉, XML로 정의된 UI 레이아웃을 코드에서 사용할 수 있도록 변환하는 작업.
@@ -20,67 +25,40 @@ import com.example.bookie.databinding.FragmentBookFeedPageBinding
 
 class BookFeedPageFragment : Fragment() {
 
+    val viewModel: BookViewModel by activityViewModels()
+
     private var _binding: FragmentBookFeedPageBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // RecyclerView 설정
-        binding.recFeeds.layoutManager = LinearLayoutManager(requireContext())
-        //binding.recFeeds.adapter = FeedsAdapter()
-
-        //binding = FragmentBookFeedPageBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
-        //binding.recFeeds.layoutManager = LinearLayoutManager(this)
-        //binding.recFeeds.adapter = FeedsAdapter()
-/*
-        // Firebase Database 참조 설정
-        database = FirebaseDatabase.getInstance().getReference("feeds")
-        feedList = mutableListOf()
-        adapter = FeedsAdapter(feedList)
-
-
-
-        // Firebase에서 데이터 가져오기
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                feedList.clear()
-                for (feedSnapshot in snapshot.children) {
-                    val feed = feedSnapshot.getValue(Feed::class.java)
-                    feed?.let { feedList.add(it) }
-                }
-                adapter.notifyDataSetChanged() // 데이터 변경 후 어댑터 갱신
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // 오류 처리
-            }
-        })
-
- */
-    }
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentBookFeedPageBinding.inflate(inflater, container, false)
+        _binding = FragmentBookFeedPageBinding.inflate(inflater,container,false)
         return binding.root
     }
-/*
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookFeedPageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // RecyclerView 설정
+        binding.recFeeds.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.readBooks.observe(viewLifecycleOwner) { books ->
+            books?.let {
+                binding.recFeeds.adapter = FeedsAdapter(it)
             }
+        }
+
+        // 버튼 이동 설정
+        binding?.recFeeds?.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_bookFeedPageFragment2)
+        }
     }
 
- */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

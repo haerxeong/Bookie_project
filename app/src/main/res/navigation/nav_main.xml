@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.bookie.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.bookie.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_unreadBookFragment"
+            app:destination="@id/unreadBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bookFeedPageFragment2"
+            app:destination="@id/bookFeedPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/unreadBookFragment"
+        android:name="com.example.bookie.UnreadBookFragment"
+        android:label="fragment_unread_book"
+        tools:layout="@layout/fragment_unread_book" >
+        <action
+            android:id="@+id/action_unreadBookFragment_to_readBookFragment"
+            app:destination="@id/readBookFragment" />
+        <action
+            android:id="@+id/action_unreadBookFragment_to_addUnreadBookFragment"
+            app:destination="@id/addUnreadBookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/readBookFragment"
+        android:name="com.example.bookie.ReadBookFragment"
+        android:label="fragment_read_book"
+        tools:layout="@layout/fragment_read_book" >
+        <action
+            android:id="@+id/action_readBookFragment_to_unreadBookFragment"
+            app:destination="@id/unreadBookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addUnreadBookFragment"
+        android:name="com.example.bookie.AddUnreadBookFragment"
+        android:label="fragment_add_unread_book"
+        tools:layout="@layout/fragment_add_unread_book" >
+        <action
+            android:id="@+id/action_addUnreadBookFragment_to_unreadBookFragment"
+            app:destination="@id/unreadBookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookFeedPageFragment"
+        android:name="com.example.bookie.BookFeedPageFragment"
+        android:label="fragment_book_feed_page"
+        tools:layout="@layout/fragment_book_feed_page" />
+</navigation>

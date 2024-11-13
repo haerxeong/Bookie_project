@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookie.databinding.ListFeedsBinding
 
-class FeedsAdapter(private val bookFeedList: List<Feed>)
-    : RecyclerView.Adapter<FeedsAdapter.Holder>(){
+class FeedsAdapter(val bookFeedList: List<MyBook>) : RecyclerView.Adapter<FeedsAdapter.Holder>(){
     //viewHolder는 RecyclerView의 각 아이템 뷰를 저장하는 역할
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -24,11 +23,13 @@ class FeedsAdapter(private val bookFeedList: List<Feed>)
     }
 
     class Holder(private val binding: ListFeedsBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(bookFeed: Feed) {
-            binding.imageView.setImageResource(bookFeed.profileImageRes)
-            binding.txtName.text = bookFeed.userName
-            binding.imageButton.setImageResource(bookFeed.bookImageRes)
-            binding.txtBookName.text = bookFeed.bookName
+        fun bind(bookFeed: MyBook) {
+            //binding.imageView.setImageResource(bookFeed.profileImageRes)
+            binding.imageView.setImageResource(R.drawable.book)
+            binding.txtName.text = bookFeed.id.toString()
+            binding.imageButton.setImageResource(R.drawable.book)
+            //binding.imageButton.setImageResource(bookFeed.bookImageRes)
+            binding.txtBookName.text = bookFeed.title
             binding.textView10.text = bookFeed.reviewText
         }
     }
