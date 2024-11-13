@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentReadBookBinding
 import com.example.bookie.viewmodel.BookViewModel
 
-class ReadBookFragment : Fragment() {
-    val viewModel: BookViewModel by activityViewModels()
+class ReadBookFragment : Fragment(), ReadBooksAdapter.OnSetWriteClickListener {
 
+    val viewModel: BookViewModel by activityViewModels()
     private lateinit var binding: FragmentReadBookBinding
     /*
      private val readBooks = arrayOf(
@@ -41,13 +41,18 @@ class ReadBookFragment : Fragment() {
 
         viewModel.readBooks.observe(viewLifecycleOwner) { books ->
             books?.let {
-                binding.recReadBooks.adapter = ReadBooksAdapter(it.toTypedArray())
+                binding.recReadBooks.adapter = ReadBooksAdapter(it.toTypedArray(), this)
             }
         }
 
-        // 버튼 이동 설정
-        binding?.btnUnread?.setOnClickListener {
+        // UnreadBookFragment로 이동
+        binding.btnUnread?.setOnClickListener {
             findNavController().navigate(R.id.action_readBookFragment_to_unreadBookFragment)
         }
+    }
+
+    // OnSetWriteClickListener 구현 - BookDiaryWriteFragment로 이동
+    override fun onSetWriteClick() {
+        findNavController().navigate(R.id.action_readBookFragment_to_bookDiaryWriteFragment)
     }
 }
