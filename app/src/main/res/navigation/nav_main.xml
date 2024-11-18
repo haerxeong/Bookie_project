@@ -46,7 +46,6 @@
         <action
             android:id="@+id/action_rewardCookieFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-        >>>>>>> 47759647eaf1b5770ed62541e1add1ca8354a820
     </fragment>
     <fragment
         android:id="@+id/unreadBookFragment"
