@@ -53,7 +53,7 @@ class BookFeedPageFragment : Fragment() {
 
         // 버튼 이동 설정
         binding?.recFeeds?.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_bookFeedPageFragment2)
+            findNavController().navigate(R.id.action_homeFragment_to_bookFeedPageFragment)
         }
     }
 
