@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".AddUnreadBookFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="17dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="독서예정 책 추가"
+            android:textAlignment="center"
+            android:textColor="#070707"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:text="위시리스트에 책사진과 함께 글을 직접 포스팅해보세요!"
+            android:textColor="#121212" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="&quot;행동이 없는 비전은 꿈을 뿐이고, 비전이 없는 행동은 시간 낭비이다. 계획이 담긴 비전과 행동만이 세상을 변화시킬 수 있다.&quot; - 조엘 A.바커"
+            android:textColor="#090909" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_bookName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="책 제목을 작성해주세요!"
+        android:inputType="text"
+        android:textColor="#0D0C0C"
+        android:textColorHint="#959292"
+        app:layout_constraintBottom_toTopOf="@+id/et_writer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/et_writer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="지은이와 옮긴이를 작성해주세요!"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/et_publisher"
+        app:layout_constraintEnd_toEndOf="@+id/et_bookName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_bookName"
+        app:layout_constraintTop_toBottomOf="@+id/et_bookName"
+        tools:textColorHint="#959292" />
+
+    <EditText
+        android:id="@+id/et_publisher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="출판사를 작성해주세요!"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/et_year"
+        app:layout_constraintEnd_toEndOf="@+id/et_writer"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_writer"
+        app:layout_constraintTop_toBottomOf="@+id/et_writer"
+        tools:textColorHint="#959292" />
+
+    <EditText
+        android:id="@+id/et_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="발행 연도를 작성해주세요!"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/et_publisher"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_publisher"
+        app:layout_constraintTop_toBottomOf="@+id/et_publisher"
+        tools:textColorHint="#959292" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="사진 올리기"
+        app:layout_constraintBottom_toTopOf="@+id/imagebtn_add_unread"
+        app:layout_constraintEnd_toEndOf="@+id/et_year"
+        app:layout_constraintStart_toStartOf="@+id/et_year"
+        app:layout_constraintTop_toBottomOf="@+id/et_year"
+        tools:textColor="#040404" />
+
+    <ImageButton
+        android:id="@+id/imagebtn_add_unread"
+        android:layout_width="73dp"
+        android:layout_height="65dp"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="사진은 100MB이하의 PNG, GIF, JPG 파일만 등록 가능합니다 :)"
+        android:textColor="#3F3F3F"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/imagebtn_add_unread"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="@+id/imagebtn_add_unread"
+        app:layout_constraintTop_toBottomOf="@+id/imagebtn_add_unread" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+        <Button
+            android:id="@+id/btn_uplaod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#8B5B5B"
+            android:text="발행"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#8B5B5B"
+            android:text="삭제"
+            android:textColor="#FFFBFB" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
