@@ -20,7 +20,6 @@ class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // View 바인딩 초기화
         binding = FragmentUnreadBookBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -31,9 +30,10 @@ class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener
         // RecyclerView 설정
         binding.recUnreadBooks.layoutManager = LinearLayoutManager(requireContext())
 
+        // unreadBooks LiveData 관찰
         viewModel.unreadBooks.observe(viewLifecycleOwner) { books ->
             books?.let {
-                binding.recUnreadBooks.adapter = UnreadBooksAdapter(it.toTypedArray(), this)
+                binding.recUnreadBooks.adapter = UnreadBooksAdapter(it, this)  // Adapter에 전달
             }
         }
 
@@ -41,12 +41,15 @@ class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener
         binding.btnRead.setOnClickListener {
             findNavController().navigate(R.id.action_unreadBookFragment_to_readBookFragment)
         }
+
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_unreadBookFragment_to_addUnreadBookFragment)
         }
     }
 
+    // setIsRead 호출 시 isRead 값도 전달
     override fun onSetReadClick(unreadbook: MyBook) {
-        viewModel.setIsRead(unreadbook.id)  // btnSetRead가 클릭될 때 호출 -> setIsRead 호출
+        val isRead = !unreadbook.isRead  // 기존 상태와 반대로 바꾸기
+        viewModel.setIsRead(unreadbook.id, isRead)  // 책 상태 업데이트
     }
 }

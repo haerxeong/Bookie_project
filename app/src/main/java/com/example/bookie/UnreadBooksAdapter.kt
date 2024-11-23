@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookie.databinding.ListUnreadbooksBinding
 
-class UnreadBooksAdapter(val unreadbooks: Array<MyBook>, private val listener: OnSetReadClickListener): RecyclerView.Adapter<UnreadBooksAdapter.Holder>() {
+class UnreadBooksAdapter(val unreadbooks: List<MyBook>, private val listener: OnSetReadClickListener): RecyclerView.Adapter<UnreadBooksAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListUnreadbooksBinding.inflate(LayoutInflater.from(parent.context))
         return Holder(binding)

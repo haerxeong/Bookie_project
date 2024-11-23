@@ -2,20 +2,21 @@ package com.example.bookie
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.bookie.databinding.FragmentAddUnreadBookBinding
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.bookie.databinding.FragmentAddUnreadBookBinding
 import com.example.bookie.viewmodel.BookViewModel
 
 class AddUnreadBookFragment : Fragment() {
@@ -101,20 +102,21 @@ class AddUnreadBookFragment : Fragment() {
             return
         }
 
+        val reviewText = "" // "독서일기글쓰기" 화면에서 가져온 텍스트로 교체
+
         val newBook = MyBook(
-            id = (bookViewModel.booklist.value?.size ?: 0) + 1,
+            id = "1", // Firebase ID 생성 방식으로 변경 가능 ///////////이거 바꿔야함!!!!!!!!!!!!!!!!!!!
             title = bookName,
             author = writer,
             publisher = publisher,
             release = year.toInt(),
-            isRead = false,
-            reviewText = "" // 리뷰 필드는 기본값
-            //reviewText 의 데이터는 현정님의 독서일기글쓰기 화면에서 가져오도록 수정해!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            isRead = false
+
         )
 
         bookViewModel.addBook(newBook)
         Toast.makeText(requireContext(), "책 정보가 업로드되었습니다.", Toast.LENGTH_SHORT).show()
+        Log.d("책정보", "업로드 완료ㅁ")
 
         // 필드 초기화
         clearFields()
@@ -131,4 +133,3 @@ class AddUnreadBookFragment : Fragment() {
         imagePickerLauncher.launch("image/*")
     }
 }
-

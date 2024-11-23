@@ -6,12 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.bookie.MyBook
+import com.example.bookie.repository.BookRepository
 
 class BookViewModel : ViewModel() {
-    private val _booklist = MutableLiveData<List<MyBook>>()
-    val booklist: LiveData<List<MyBook>>
-        get() = _booklist
 
+    private val repository = BookRepository()
+
+    // LiveData로 책 목록 관리
+    private val _booklist = MutableLiveData<List<MyBook>>()
+    val booklist: LiveData<List<MyBook>> get() = _booklist
+
+    // 읽은 책과 읽지 않은 책을 분리한 LiveData
     val readBooks: LiveData<List<MyBook>> = booklist.map {
         it.filter { book -> book.isRead }
     }
@@ -20,41 +25,47 @@ class BookViewModel : ViewModel() {
         it.filter { book -> !book.isRead }
     }
 
-    // 이미지 URI를 관리하는 변수 추가
+    // 이미지 URI를 관리하는 변수
     private val _imageUri = MutableLiveData<Uri?>()
     val imageUri: LiveData<Uri?> get() = _imageUri
 
-
     init {
-        _booklist.value = listOf(
-            MyBook(1, "코틀린 인 액션", "드미트리 제메로프", "에이콘", 2017, true,"결혼한다면 첫쨰 자식의 이름은 코틀린! 너다"),
-            MyBook(2, "프로그래밍 코틀린", "스테판 립프란츠", "한빛미디어", 2019, true,"프로그래밍이란..다시 한번 ..포기할 수 있게 용기를 얻었어요"),
-            MyBook(3, "코틀린을 다루는 기술", "라울-게이브리엘 우르마르", "한빛미디어", 2019,false,"이 책을 읽고 코틀린과 친해졌어요"),
-            MyBook(4, "코틀린으로 배우는 함수형 프로그래밍", "이타마르 로사", "한빛미디어", 2019,false,"프로그래밍 시간 가는 줄 모르겠다. 눈 감았다 뜨니 한달이 지났어!"),
-            MyBook(5, "코틀린으로 쇼핑몰 만들기", "김영재", "한빛미디어", 2019,false,"이 책 덕분에 쇼핑몰 사이트를 만들며 프로그래밍 실력이 향상됨")
-        )
-    }
-    //책 추가 함수
-    fun addBook(book: MyBook) {
-        val list = _booklist.value?.toMutableList() ?: mutableListOf()
-        list.add(book)
-        _booklist.value = list
+        // Firebase에서 책 목록을 실시간으로 가져옴
+        val userId = "1" // 실제 사용자 ID를 설정해야 합니다.
+        repository.observeBookList(userId, _booklist)
     }
 
-    fun modifyBook(attribute: String, bookId: Int) {
-        if (attribute == "isRead") {
-            _booklist.value = _booklist.value?.map {
-                if (it.id == bookId) {
-                    it.copy(isRead = true)
-                } else {
-                    it
-                }
-            }
+    // **Create**: 책 추가 -> 사용자가 작성한 MyBook 데이터 객체를 파이어베이스에 upload 해주는 코드
+    fun addBook(book: MyBook) {
+        val userId = "1" // 실제 사용자 ID를 사용해야 합니다.
+        repository.addBook(userId, book)
+    }
+
+    // **Read**: 이미 `observeBookList`로 구현됨 (실시간 데이터 관찰)
+    //책 한권을 상세보기 할 일이 없으므로 Read기능은 필요없음 생략할게용
+
+    // **Update**: 책 업데이트
+    // 책 수정하는 update 기능은 필요없음, 수정할 일이 없거덩 피드글을 아예 삭제하고 다시 생성하도록
+    fun updateBook(bookId: String, updatedBook: MyBook) {
+        val userId = "1" // 실제 사용자 ID를 사용해야 합니다.
+        repository.updateBook(userId, bookId, updatedBook)
+    }
+
+    // 읽음 상태 변경 함수
+    // BookViewModel의 setIsRead 함수 수정
+    fun setIsRead(bookId: String, isRead: Boolean) {
+        val userId = "1" // 실제 사용자 ID 사용
+        val bookToUpdate = _booklist.value?.find { it.id == bookId }
+        bookToUpdate?.let {
+            val updatedBook = it.copy(isRead = isRead) // isRead 상태 업데이트
+            updateBook(bookId, updatedBook)  // 책 정보 업데이트
         }
     }
 
-    fun setIsRead(bookId: Int) {
-        modifyBook("isRead", bookId)
+    // **Delete**: 책 삭제
+    fun deleteBook(bookId: String) {
+        val userId = "1" // 실제 사용자 ID를 사용해야 합니다.
+        repository.deleteBook(userId, bookId)
     }
 
     // 이미지 URI 설정

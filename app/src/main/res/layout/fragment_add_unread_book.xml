@@ -162,14 +162,6 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#8B5B5B"
-            android:text="삭제"
-            android:textColor="#FFFBFB" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

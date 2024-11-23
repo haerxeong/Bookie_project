@@ -30,7 +30,6 @@ class FeedsAdapter(val bookFeedList: List<MyBook>) : RecyclerView.Adapter<FeedsA
             binding.imageButton.setImageResource(R.drawable.book)
             //binding.imageButton.setImageResource(bookFeed.bookImageRes)
             binding.txtBookName.text = bookFeed.title
-            binding.textView10.text = bookFeed.reviewText
         }
     }
 }
