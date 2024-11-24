@@ -39,6 +39,7 @@ class BookDiaryWriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // EditText 및 버튼 초기화
+        val readingBookNameInput = binding.readingBookNameInput
         val readingDateInput = binding.readingDateInput
         val diaryContentInput = binding.diaryContentInput
         val publishButton = binding.publishButton
@@ -48,6 +49,7 @@ class BookDiaryWriteFragment : Fragment() {
 
         // 입력값 변경 감지
         readingDateInput.addTextChangedListener { updatePublishButtonState() }
+        readingBookNameInput.addTextChangedListener { updatePublishButtonState() }
         diaryContentInput.addTextChangedListener { updatePublishButtonState() }
 
         // 발행 버튼 클릭 리스너
@@ -58,7 +60,8 @@ class BookDiaryWriteFragment : Fragment() {
                 Log.d("BookDiaryWriteFragment", "Selected Book ID: $bookId")
 
                 // 다이어리 내용을 발행하는 메서드 호출
-                uploadDiaryDetails(bookId, readingDateInput.text.toString(), diaryContentInput.text.toString())
+                uploadDiaryDetails(bookId, readingDateInput.text.toString(),
+                    readingBookNameInput.text.toString(), diaryContentInput.text.toString())
             } ?: run {
                 // bookId가 null이면, 사용자에게 알림
                 Toast.makeText(requireContext(), "책을 선택해주세요.", Toast.LENGTH_SHORT).show()
@@ -71,15 +74,26 @@ class BookDiaryWriteFragment : Fragment() {
 //        selectedBookId = bookId
 //    }
 
-    private fun uploadDiaryDetails(bookId: String,readingDateText: String, diaryContent: String) {
+    private fun uploadDiaryDetails(
+        bookId: String,
+        readingDateText: String,
+        readingBookNameText: String,
+        diaryContent: String
+    ) {
+        /*
         val readingDate = readingDateText
-        if (readingDate.isEmpty() || diaryContent.isEmpty()) {
-            Toast.makeText(requireContext(), "날짜와 내용을 모두 입력해주세요", Toast.LENGTH_SHORT).show()
+        val readingBookName = readingBookNameText
+
+         */
+
+        if (readingDateText.isEmpty() || readingBookNameText.isEmpty() || diaryContent.isEmpty()) {
+            Toast.makeText(requireContext(), "날짜와 책 이름, 내용을 모두 입력해주세요", Toast.LENGTH_SHORT).show()
             return
         }
 
         val newDiary = BookDiary(
-            readDate = readingDate,
+            readDate = readingDateText,
+            bookName = readingBookNameText,
             reviewText = diaryContent
         )
 
@@ -91,12 +105,14 @@ class BookDiaryWriteFragment : Fragment() {
 
     private fun updatePublishButtonState() {
         val isDateValid = binding.readingDateInput.text.isNotEmpty()
+        val isBookNameValid = binding.readingBookNameInput.text.isNotEmpty()
         val isContentValid = binding.diaryContentInput.text.isNotEmpty()
-        binding.publishButton.isEnabled = isDateValid && isContentValid
+        binding.publishButton.isEnabled = isDateValid && isContentValid && isBookNameValid
     }
 
     private fun clearFields() {
         binding.readingDateInput.text.clear()
+        binding.readingBookNameInput.text.clear()
         binding.diaryContentInput.text.clear()
     }
 

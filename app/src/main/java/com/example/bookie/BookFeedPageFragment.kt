@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentBookFeedPageBinding
 import com.example.bookie.databinding.FragmentUnreadBookBinding
+import com.example.bookie.viewmodel.BookDiaryViewModel
 import com.example.bookie.viewmodel.BookViewModel
 
 /*
@@ -23,9 +24,10 @@ import com.example.bookie.viewmodel.BookViewModel
  * 모든 UI 요소는 View를 기반으로 하며, 버튼, 텍스트뷰, 이미지뷰 등은 모두 View 클래스를 상속한 클래스들
  */
 
+
 class BookFeedPageFragment : Fragment() {
 
-    val viewModel: BookViewModel by activityViewModels()
+    val viewModel: BookDiaryViewModel by activityViewModels()
 
     private var _binding: FragmentBookFeedPageBinding? = null
     private val binding get() = _binding!!
@@ -36,25 +38,36 @@ class BookFeedPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentBookFeedPageBinding.inflate(inflater,container,false)
+        // RecyclerView 설정
+        binding.recFeeds.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // RecyclerView 설정
-        binding.recFeeds.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.readBooks.observe(viewLifecycleOwner) { books ->
-            books?.let {
-                binding.recFeeds.adapter = FeedsAdapter(it)
+
+        viewModel.diarylist.observe(viewLifecycleOwner) { diaries ->
+            diaries?.let {
+                if(binding.recFeeds.adapter == null){
+                    binding.recFeeds.adapter = FeedsAdapter(it)
+                }else{
+                    (binding.recFeeds.adapter as FeedsAdapter).notifyDataSetChanged()
+                }
+
             }
         }
 
         // 버튼 이동 설정
-        binding?.recFeeds?.setOnClickListener {
+        binding.recFeeds.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_bookFeedPageFragment)
         }
+    }
+
+    // Adapter에서는 바로 ViewModel에 접근할 수 없기 때문에 interface를 통해 접근
+    interface OnSetFeedClickListener {
+        fun onSetFeedClick(feed : BookDiary)
     }
 
     override fun onDestroyView() {

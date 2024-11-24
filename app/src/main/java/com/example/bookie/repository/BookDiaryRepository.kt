@@ -1,8 +1,8 @@
 package com.example.bookie.repository
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.bookie.BookDiary
-import com.example.bookie.MyBook
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,16 +20,19 @@ class BookDiaryRepository {
 
     // **Read**: 다이어리 포스트? 목록을 관찰하여 LiveData로 반환
     fun observeDiaryList(userId: String, bookDiaryLiveData: MutableLiveData<List<BookDiary>>) {
-        userRef.child(userId).child("posts").addValueEventListener(object : ValueEventListener {
+        userRef.child(userId).child("diaries").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val diaryList = mutableListOf<BookDiary>()
                 for (data in snapshot.children) {
                     val diary = BookDiary(
-                        readDate = data.child("timestamp").getValue(String::class.java) ?: "",
-                        reviewText = data.child("content").getValue(String::class.java) ?: ""
+                        readDate = data.child("readDate").getValue(String::class.java) ?: "",
+                        bookName = data.child("bookName").getValue(String::class.java) ?: "",
+                        reviewText = data.child("reviewText").getValue(String::class.java) ?: ""
                     )
+                    Log.d("Firebase", "Review Text: ${diary.reviewText}")
                     diaryList.add(diary)
                 }
+                Log.d("Firebase", "diaryList size: ${diaryList.size}")
                 bookDiaryLiveData.postValue(diaryList)
             }
             override fun onCancelled(error: DatabaseError) {
