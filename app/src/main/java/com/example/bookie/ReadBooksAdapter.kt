@@ -1,5 +1,6 @@
 package com.example.bookie
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -13,7 +14,7 @@ class ReadBooksAdapter(
 
     // 글쓰기 버튼 클릭 이벤트를 위한 인터페이스
     interface OnSetWriteClickListener {
-        fun onSetWriteClick()
+        fun onSetWriteClick(bookId: String) // 클릭된 책 ID 전달
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -47,7 +48,8 @@ class ReadBooksAdapter(
 
             // 글쓰기 버튼 클릭 시 인터페이스 메서드 호출
             binding.btnWrite.setOnClickListener {
-                listener.onSetWriteClick()
+                Log.d("ReadBooksAdapter", "Book clicked, Book ID: ${readbook.id}")
+                listener.onSetWriteClick(readbook.id)
             }
         }
     }
