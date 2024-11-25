@@ -10,11 +10,16 @@ import com.example.bookie.repository.BookRepository
 
 class BookViewModel : ViewModel() {
 
-    private val repository = BookRepository()
-
     // LiveData로 책 목록 관리
     private val _booklist = MutableLiveData<List<MyBook>>()
     val booklist: LiveData<List<MyBook>> get() = _booklist
+
+    private val repository = BookRepository()
+    init {
+        // Firebase에서 책 목록을 실시간으로 가져옴
+        val userId = "1" // 실제 사용자 ID를 설정해야 합니다.
+        repository.observeBookList(userId, _booklist)
+    }
 
     // 읽은 책과 읽지 않은 책을 분리한 LiveData
     val readBooks: LiveData<List<MyBook>> = booklist.map {
@@ -28,12 +33,6 @@ class BookViewModel : ViewModel() {
     // 이미지 URI를 관리하는 변수
     private val _imageUri = MutableLiveData<Uri?>()
     val imageUri: LiveData<Uri?> get() = _imageUri
-
-    init {
-        // Firebase에서 책 목록을 실시간으로 가져옴
-        val userId = "1" // 실제 사용자 ID를 설정해야 합니다.
-        repository.observeBookList(userId, _booklist)
-    }
 
     // **Create**: 책 추가 -> 사용자가 작성한 MyBook 데이터 객체를 파이어베이스에 upload 해주는 코드
     fun addBook(book: MyBook) {
