@@ -9,9 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentBookFeedPageBinding
-import com.example.bookie.databinding.FragmentUnreadBookBinding
 import com.example.bookie.viewmodel.BookDiaryViewModel
-import com.example.bookie.viewmodel.BookViewModel
+
 
 /*
 **inflate**는 XML 레이아웃 파일을 메모리에 로드하여 화면에 표시할 수 있는 View 객체로 만드는 과정.
@@ -63,11 +62,6 @@ class BookFeedPageFragment : Fragment() {
         binding.recFeeds.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_bookFeedPageFragment)
         }
-    }
-
-    // Adapter에서는 바로 ViewModel에 접근할 수 없기 때문에 interface를 통해 접근
-    interface OnSetFeedClickListener {
-        fun onSetFeedClick(feed : BookDiary)
     }
 
     override fun onDestroyView() {
