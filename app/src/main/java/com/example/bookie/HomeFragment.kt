@@ -52,6 +52,18 @@ class HomeFragment : Fragment() {
             }
         }
 
+        bookViewModel.readBooks.observe(viewLifecycleOwner) { readBooks ->
+            userViewModel.user.value?.let { user ->
+                binding?.goalTxt?.text = "Goal: ${readBooks.size}/${user.goal}"
+
+                if (user.goal > 0) {
+                    binding?.goalRing?.progress = (readBooks.size * 100 / user.goal)
+                } else {
+                    binding?.goalRing?.progress = 0
+                }
+            }
+        }
+
         missionViewModel.mission.observe(viewLifecycleOwner) { mission ->
             mission?.let {
                 binding?.btnCookie?.text = "쿠키 x${it.cookies}"

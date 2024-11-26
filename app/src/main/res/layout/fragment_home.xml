@@ -1,4 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,103 +11,96 @@
         android:id="@+id/greeting_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/goal_ring"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 목표 링 -->
-
-    <TextView
-        android:id="@+id/txt_goal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="목표 도서, 작지만 확실한 성취감이 기다리고 있어요."
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/book_list"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goal_ring" />
-
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/goal_ring"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         android:max="100"
         app:indicatorSize="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintBottom_toTopOf="@+id/txt_goal"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/greeting_text"
         app:trackThickness="20dp" />
 
-    <!-- 책 목록 RecyclerView -->
+    <!-- 목표 설명 텍스트 -->
+    <TextView
+        android:id="@+id/txt_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
+        android:text="목표 도서, 작지만 확실한 성취감이 기다리고 있어요."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/book_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/goal_ring" />
 
+    <!-- 목표 텍스트(링 내부) -->
     <TextView
         android:id="@+id/goal_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/goal_ring"
-        app:layout_constraintEnd_toEndOf="@+id/goal_ring"
-        app:layout_constraintStart_toStartOf="@+id/goal_ring"
-        app:layout_constraintTop_toTopOf="@+id/goal_ring" />
+        app:layout_constraintBottom_toBottomOf="@id/goal_ring"
+        app:layout_constraintEnd_toEndOf="@id/goal_ring"
+        app:layout_constraintStart_toStartOf="@id/goal_ring"
+        app:layout_constraintTop_toTopOf="@id/goal_ring" />
 
+    <!-- 책 목록 RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/book_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="visible"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@id/mission_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/goal_ring"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- 미션 레이아웃 -->
     <LinearLayout
         android:id="@+id/mission_layout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="32dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/book_list">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+    <!-- 미션 내용 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/image_cookie"
                 android:layout_width="127dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
                 android:src="@drawable/baseline_cookie" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -122,23 +116,20 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
         </LinearLayout>
 
+        <!-- 미션 시작 버튼 -->
         <Button
             android:id="@+id/btn_start_mission"
-            android:layout_width="242dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="30dp"
             android:text="미션 시작하기"
             android:textAlignment="center"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

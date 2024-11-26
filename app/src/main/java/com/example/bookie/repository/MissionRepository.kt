@@ -78,17 +78,4 @@ class MissionRepository {
             }
         }
     }
-
-    fun observeMission(userId: String, missionLiveData: MutableLiveData<Mission>) {
-        userRef.child(userId).child("mission").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val mission = snapshot.getValue(Mission::class.java)
-                missionLiveData.value = mission
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("MissionRepository", "Failed to observe mission for user: $userId", error.toException())
-            }
-        })
-    }
 }
