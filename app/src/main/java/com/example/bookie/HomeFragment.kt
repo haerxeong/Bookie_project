@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater)
         return binding?.root
     }
-
+// haeryeong0402 Gofudgofud04!!
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,6 +39,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // 목표 설정하는 것도 만들어야 함..!!! 회원가입할 때 받으면 좋을 것 같은데...
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             user?.let {
                 binding?.greetingText?.text = "${it.username}님, \n오늘 읽은 책이 내일의 나를 만듭니다."
