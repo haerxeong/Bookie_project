@@ -32,8 +32,13 @@ class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener
 
         // unreadBooks LiveData 관찰
         viewModel.unreadBooks.observe(viewLifecycleOwner) { books ->
-            books?.let {
-                binding.recUnreadBooks.adapter = UnreadBooksAdapter(it, this)  // Adapter에 전달
+            if (books.isNullOrEmpty()) {
+                // 책이 없을 때 빈 화면 표시
+                binding.recUnreadBooks.visibility = View.GONE
+            } else {
+                // 책이 있을 때 RecyclerView 표시
+                binding.recUnreadBooks.visibility = View.VISIBLE
+                binding.recUnreadBooks.adapter = UnreadBooksAdapter(books, this)  // Adapter에 전달
             }
         }
 

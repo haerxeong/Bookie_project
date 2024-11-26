@@ -23,7 +23,7 @@ class BookRepository {
     }
 
     // **Read**: 특정 책 데이터를 가져오는 함수
-    fun readBook(userId: String, bookId: String, bookLiveData: MutableLiveData<MyBook>) {
+    fun getBook(userId: String, bookId: String, bookLiveData: MutableLiveData<MyBook>) {
         userRef.child(userId).child("booklist").child(bookId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 // 책이 존재할 경우
@@ -50,30 +50,22 @@ class BookRepository {
         })
     }
 
-
     // **Read**: 책 목록을 관찰하여 LiveData로 반환
     fun observeBookList(userId: String, bookListLiveData: MutableLiveData<List<MyBook>>) {
         userRef.child(userId).child("booklist").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val bookList = mutableListOf<MyBook>()
                 for (data in snapshot.children) {
-                    val book = MyBook(
-                        id = data.child("id").getValue(String::class.java) ?: "",
-                        title = data.child("title").getValue(String::class.java) ?: "",
-                        author = data.child("author").getValue(String::class.java) ?: "",
-                        publisher = data.child("publisher").getValue(String::class.java) ?: "",
-                        release = data.child("release").getValue(Int::class.java) ?: 0,
-                        isRead = data.child("isRead").getValue(Boolean::class.java) ?: false,
-                        bookImageUrl = data.child("bookImageUrl").getValue(String::class.java) ?: ""
-                        //reviewText = data.child("reviewText").getValue(String::class.java) ?: data.child("reviewText").getValue(Long::class.java)?.toString() ?: ""
-                    )
-                    bookList.add(book)
+                    val book = data.getValue(MyBook::class.java)
+                    // Filter out invalid entries
+                    if (book != null && book.id.isNotEmpty() && book.title.isNotEmpty()) {
+                        bookList.add(book)
+                    }
                 }
-                bookListLiveData.postValue(bookList) // 변경된 데이터 전달
+                bookListLiveData.postValue(bookList) // Update LiveData with valid books
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // 실패 시 로그 출력 (필요시 MutableLiveData로 에러 상태 전달)
                 println("Failed to load books: ${error.message}")
             }
         })

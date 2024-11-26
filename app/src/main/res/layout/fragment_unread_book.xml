@@ -48,7 +48,8 @@
                 android:layout_weight="0"
                 android:backgroundTint="@color/mainColor"
                 android:clickable="true"
-                app:srcCompat="@drawable/baseline_add" />
+                app:srcCompat="@drawable/baseline_add"
+                android:contentDescription="Add Book" />
 
         </LinearLayout>
 
