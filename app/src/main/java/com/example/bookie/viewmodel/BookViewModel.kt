@@ -43,21 +43,27 @@ class BookViewModel : ViewModel() {
     // **Read**: 이미 `observeBookList`로 구현됨 (실시간 데이터 관찰)
     //책 한권을 상세보기 할 일이 없으므로 Read기능은 필요없음 생략할게용
 
-    // **Update**: 책 업데이트
-    // 책 수정하는 update 기능은 필요없음, 수정할 일이 없거덩 피드글을 아예 삭제하고 다시 생성하도록
-    fun updateBook(bookId: String, updatedBook: MyBook) {
-        val userId = "1" // 실제 사용자 ID를 사용해야 합니다.
-        repository.updateBook(userId, bookId, updatedBook)
+    // **Update**: Update book
+    private fun updateBook(userId: String = "1", bookId: String, updatedBook: MyBook, attribute: String) { // userId는 임시로 1로 설정
+        if (attribute == "isRead") {
+            val updatedBookList = _booklist.value?.map {
+                if (it.id == bookId) {
+                    it.copy(isRead = updatedBook.isRead)
+                } else {
+                    it
+                }
+            } ?: emptyList()
+            _booklist.value = updatedBookList
+            repository.updateBook(userId, bookId, updatedBook)
+        }
     }
 
     // 읽음 상태 변경 함수
-    // BookViewModel의 setIsRead 함수 수정
-    fun setIsRead(bookId: String, isRead: Boolean) {
-        val userId = "1" // 실제 사용자 ID 사용
+    fun setIsRead(userId: String = "1", bookId: String, isRead: Boolean) {
         val bookToUpdate = _booklist.value?.find { it.id == bookId }
         bookToUpdate?.let {
             val updatedBook = it.copy(isRead = isRead) // isRead 상태 업데이트
-            updateBook(bookId, updatedBook)  // 책 정보 업데이트
+            updateBook(userId, bookId, updatedBook, "isRead")  // 책 정보 업데이트
         }
     }
 

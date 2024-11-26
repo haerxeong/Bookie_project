@@ -47,9 +47,8 @@ class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener
         }
     }
 
-    // setIsRead 호출 시 isRead 값도 전달
+    // setIsRead 호출 시 isRead 값을 true로
     override fun onSetReadClick(unreadbook: MyBook) {
-        val isRead = !unreadbook.isRead  // 기존 상태와 반대로 바꾸기
-        viewModel.setIsRead(unreadbook.id, isRead)  // 책 상태 업데이트
+        viewModel.setIsRead("1", unreadbook.id, true)  // 책 상태 업데이트
     }
 }
