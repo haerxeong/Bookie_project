@@ -42,6 +42,21 @@ class MissionRepository {
         })
     }
 
+    // 하나의 미션 가져오기
+    fun getMission(userId: String, missionLiveData: MutableLiveData<Mission>) {
+//        val missionRef = userRef.child(userId).child("mission")
+        userRef.child(userId).child("mission").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val mission = snapshot.children.firstOrNull()?.getValue(Mission::class.java)
+                missionLiveData.value = mission
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MissionRepository", "Failed to load mission", error.toException())
+            }
+        })
+    }
+
     // **Update**: 특정 미션 수정
     fun updateMission(userId: String, missionId: String, updatedMission: Mission) {
         userRef.child(userId).child(missionId).setValue(updatedMission).addOnCompleteListener {
@@ -62,5 +77,18 @@ class MissionRepository {
                 Log.e("MissionRepository", "Error deleting mission", it.exception)
             }
         }
+    }
+
+    fun observeMission(userId: String, missionLiveData: MutableLiveData<Mission>) {
+        userRef.child(userId).child("mission").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val mission = snapshot.getValue(Mission::class.java)
+                missionLiveData.value = mission
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MissionRepository", "Failed to observe mission for user: $userId", error.toException())
+            }
+        })
     }
 }

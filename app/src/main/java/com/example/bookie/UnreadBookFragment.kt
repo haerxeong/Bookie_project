@@ -10,11 +10,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentUnreadBookBinding
 import com.example.bookie.viewmodel.BookViewModel
+import androidx.appcompat.widget.SearchView
 
 class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener {
     val viewModel: BookViewModel by activityViewModels()
 
     private lateinit var binding: FragmentUnreadBookBinding
+    private lateinit var adapter: UnreadBooksAdapter
+    private var allUnreadBooks: List<MyBook> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,18 +32,26 @@ class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener
 
         // RecyclerView 설정
         binding.recUnreadBooks.layoutManager = LinearLayoutManager(requireContext())
+        adapter = UnreadBooksAdapter(emptyList(), this)
+        binding.recUnreadBooks.adapter = adapter
 
         // unreadBooks LiveData 관찰
         viewModel.unreadBooks.observe(viewLifecycleOwner) { books ->
-            if (books.isNullOrEmpty()) {
-                // 책이 없을 때 빈 화면 표시
-                binding.recUnreadBooks.visibility = View.GONE
-            } else {
-                // 책이 있을 때 RecyclerView 표시
-                binding.recUnreadBooks.visibility = View.VISIBLE
-                binding.recUnreadBooks.adapter = UnreadBooksAdapter(books, this)  // Adapter에 전달
-            }
+            allUnreadBooks = books
+            filterBooks(binding.searchBook.query.toString())
         }
+
+        // SearchView 설정
+        binding.searchBook.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterBooks(newText ?: "")
+                return true
+            }
+        })
 
         // 버튼 이동 설정
         binding.btnRead.setOnClickListener {
@@ -50,6 +61,11 @@ class UnreadBookFragment : Fragment(), UnreadBooksAdapter.OnSetReadClickListener
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_unreadBookFragment_to_addUnreadBookFragment)
         }
+    }
+
+    private fun filterBooks(query: String) {
+        val filteredBooks = allUnreadBooks.filter { it.title.contains(query, ignoreCase = true) }
+        adapter.updateBooks(filteredBooks)
     }
 
     // setIsRead 호출 시 isRead 값을 true로
