@@ -10,36 +10,29 @@ class MissionViewModel : ViewModel() {
     private val _missionList = MutableLiveData<List<Mission>>()
     val missionList: LiveData<List<Mission>> get() = _missionList
 
-    private val _mission = MutableLiveData<Mission>()
-    val mission: LiveData<Mission> get() = _mission
-
     private val repository = MissionRepository()
 
     init {
-        loadMission()
+        val userId = "1" // 실제 사용자 ID로 대체 필요
+        loadMissions(userId)
     }
 
-    private fun loadMission() {
-        val userId = "1"
-        repository.getMission(userId, _mission)
-    }
-
-    // 특정 사용자에 대한 미션 목록을 로드하기 위한 메서드
+    // 특정 사용자에 대한 모든 미션 목록을 로드
     fun loadMissions(userId: String) {
         repository.getAllMissions(userId, _missionList)
     }
 
-    // **Create**: 새로운 미션 추가
-    fun addMission(userId: String, mission: Mission) {
-        repository.addMission(userId, mission)
+    // 새로운 미션 추가 및 쿠키 증가
+    fun addMissionAndIncrementCookies(userId: String, mission: Mission) {
+        repository.addMissionAndIncrementCookies(userId, mission)
     }
 
-    // **Update**: 미션 수정
+    // 특정 미션 수정
     fun updateMission(userId: String, missionId: String, updatedMission: Mission) {
         repository.updateMission(userId, missionId, updatedMission)
     }
 
-    // **Delete**: 미션 삭제
+    // 특정 미션 삭제
     fun deleteMission(userId: String, missionId: String) {
         repository.deleteMission(userId, missionId)
     }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.bookie.databinding.FragmentMissionWritingBinding
 import com.example.bookie.viewmodel.MissionViewModel
 
@@ -18,8 +19,7 @@ class MissionWritingFragment : Fragment() {
     private val binding get() = _binding!!
     private val missionViewModel: MissionViewModel by activityViewModels()
 
-    // 예시로 userId를 하드코딩했으나, 실제로는 로그인한 사용자 ID를 받아와야 함
-    private val userId = "1"  // 이 부분을 실제 로그인된 사용자 ID로 변경해야 함
+    private val userId = "1"  // 로그인된 사용자 ID로 대체 필요
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,10 +35,10 @@ class MissionWritingFragment : Fragment() {
         val missionInput = binding.mission1EditText
         val publishButton = binding.publishButton
 
-        // 발행 버튼 비활성화 초기화
+        // 발행 버튼 초기 상태 비활성화
         publishButton.isEnabled = false
 
-        // 입력 필드가 비어있는지 체크하여 버튼 상태 변경
+        // 입력 필드 상태 감지
         missionInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 updatePublishButtonState()
@@ -52,21 +52,24 @@ class MissionWritingFragment : Fragment() {
         publishButton.setOnClickListener {
             val missionText = missionInput.text.toString()
             if (missionText.isEmpty()) {
-                Toast.makeText(requireContext(), "미션 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "미션 내용을 입력해주세요. ", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 새로운 미션 객체 생성
+            // 새로운 미션 생성
             val newMission = Mission(missionText)
 
-            // 미션 추가 (userId와 함께)
-            missionViewModel.addMission(userId, newMission)
+            // 미션 추가 및 쿠키 증가
+            missionViewModel.addMissionAndIncrementCookies(userId, newMission)
 
-            // 입력 필드 비우기
+            // 입력 필드 초기화
             missionInput.text.clear()
 
-            // Toast로 알림
-            Toast.makeText(requireContext(), "미션이 추가되었습니다!", Toast.LENGTH_SHORT).show()
+            // Toast 알림
+            Toast.makeText(requireContext(), "미션이 추가되고 쿠키가 증가했습니다!", Toast.LENGTH_SHORT).show()
+
+            // RewardCookieFragment로 이동
+            findNavController().navigate(R.id.action_missionWritingFragment_to_rewardCookieFragment)
         }
     }
 

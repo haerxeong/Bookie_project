@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "883985069924",
+    "firebase_url": "https://bookie-9ae3d-default-rtdb.firebaseio.com",
     "project_id": "bookie-9ae3d",
     "storage_bucket": "bookie-9ae3d.firebasestorage.app"
   },
