@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "883985069924",
-    "project_id": "bookie-9ae3d",
-    "storage_bucket": "bookie-9ae3d.firebasestorage.app"
+    "project_number": "782586935129",
+    "firebase_url": "https://bookie2-2c279-default-rtdb.firebaseio.com",
+    "project_id": "bookie2-2c279",
+    "storage_bucket": "bookie2-2c279.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:883985069924:android:51d4b306a9646f6357ec71",
+        "mobilesdk_app_id": "1:782586935129:android:ef0dfe1b85561924847e48",
         "android_client_info": {
           "package_name": "com.example.bookie"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC4KLGVjuZ1lBTDZrTER3DXXILbOG7aOtM"
+          "current_key": "AIzaSyBuooHWapi-d6HFDaqnj03AoCpAzXH4JMU"
         }
       ],
       "services": {

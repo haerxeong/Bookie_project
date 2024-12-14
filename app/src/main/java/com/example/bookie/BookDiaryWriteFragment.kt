@@ -1,3 +1,4 @@
+//BookDiaryWriteFragment.kt
 package com.example.bookie
 
 import android.os.Bundle

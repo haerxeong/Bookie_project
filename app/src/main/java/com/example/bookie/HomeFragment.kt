@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
 import com.example.bookie.databinding.FragmentHomeBinding
 import com.example.bookie.viewmodel.BookViewModel
@@ -30,16 +31,27 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // RecyclerView 설정
+        // 책 목록 RecyclerView 설정
         binding?.bookList?.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-
         bookViewModel.unreadBooks.observe(viewLifecycleOwner) { books ->
             books?.let {
                 binding?.bookList?.adapter = BookAdapter(it)
             }
         }
 
-        // 목표 설정하는 것도 만들어야 함..!!! 회원가입할 때 받으면 좋을 것 같은데...
+        // 미션 목록 RecyclerView 설정
+        binding?.missionList?.layoutManager = LinearLayoutManager(requireContext())
+        missionViewModel.missionList.observe(viewLifecycleOwner) { missions ->
+            missions?.let {
+                binding?.missionList?.adapter = MissionAdapter(it)
+            }
+        }
+
+        // 미션 데이터 가져오기 (ID 직접 설정)
+        val userId = "defaultUserId" // 여기에 기본 사용자 ID를 직접 입력
+        missionViewModel.loadMissions(userId)
+
+        // 사용자 목표 및 인사말 설정
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             user?.let {
                 binding?.greetingText?.text = "${it.username}님, \n오늘 읽은 책이 내일의 나를 만듭니다."
@@ -53,6 +65,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // 읽은 책 데이터 관찰
         bookViewModel.readBooks.observe(viewLifecycleOwner) { readBooks ->
             userViewModel.user.value?.let { user ->
                 binding?.goalTxt?.text = "Goal: ${readBooks.size}/${user.goal}"
@@ -65,6 +78,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // 현재 미션 관찰
         missionViewModel.mission.observe(viewLifecycleOwner) { mission ->
             mission?.let {
                 binding?.btnCookie?.text = "쿠키 x${it.cookies}"
@@ -72,6 +86,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // 미션 시작 버튼 클릭 리스너
         binding?.btnStartMission?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_missionWritingFragment)
         }

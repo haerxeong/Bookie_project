@@ -28,8 +28,9 @@ class MainActivity : AppCompatActivity() {
 
 
         val database = Firebase.database
-        val myRef = database.getReferenceFromUrl("https://bookie-9ae3d-default-rtdb.firebaseio.com/") // 예: "users"
-
+        //
+        //val myRef = database.getReferenceFromUrl("https://bookie-9ae3d-default-rtdb.firebaseio.com/") // 예: "users"
+        val myRef = database.getReferenceFromUrl("https://bookie2-2c279-default-rtdb.firebaseio.com/")
         // 데이터 읽기
         myRef.child("id").get().addOnSuccessListener { snapshot ->
             val value = snapshot.getValue(String::class.java)
