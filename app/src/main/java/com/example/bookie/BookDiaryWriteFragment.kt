@@ -10,14 +10,17 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.bookie.databinding.FragmentBookDiaryWriteBinding
 import com.example.bookie.viewmodel.BookDiaryViewModel
+import com.example.bookie.viewmodel.BookViewModel
 
 class BookDiaryWriteFragment : Fragment() {
 
     private var _binding: FragmentBookDiaryWriteBinding? = null
     private val binding get() = _binding!!
     private val diaryViewModel: BookDiaryViewModel by activityViewModels()
+    private val bookViewModel: BookViewModel by activityViewModels()
 
     //책의 ID를 저장할 변수
     private var selectedBookId: String?= null
@@ -30,7 +33,6 @@ class BookDiaryWriteFragment : Fragment() {
 
         // Bundle에서 전달된 bookId를 받음
         selectedBookId = arguments?.getString("bookId")
-
 
         return binding.root
     }
@@ -67,12 +69,23 @@ class BookDiaryWriteFragment : Fragment() {
                 Toast.makeText(requireContext(), "책을 선택해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
-    }
 
-//    override fun onSetWriteClick(bookId: String) {
-//        Log.d("BookDiaryWriteFragment", "Book ID received: $bookId")
-//        selectedBookId = bookId
-//    }
+        // 책 정보 바인딩
+        selectedBookId?.let { bookId ->
+            bookViewModel.booklist.value?.find { it.id == bookId }?.let { book ->
+                if (book.bookImageUrl.isNotEmpty()) {
+                    Glide.with(this)
+                        .load(book.bookImageUrl)
+                        .into(binding.bookImage)
+                } else {
+                    binding.bookImage.setImageResource(R.drawable.book)
+                }
+                binding.bookTitle.text = book.title
+                binding.readingBookNameInput.setText(book.title)
+                binding.bookInfo.text = "${book.author} | ${book.publisher} | ${book.release}"
+            }
+        }
+    }
 
     private fun uploadDiaryDetails(
         bookId: String,
@@ -80,12 +93,6 @@ class BookDiaryWriteFragment : Fragment() {
         readingBookNameText: String,
         diaryContent: String
     ) {
-        /*
-        val readingDate = readingDateText
-        val readingBookName = readingBookNameText
-
-         */
-
         if (readingDateText.isEmpty() || readingBookNameText.isEmpty() || diaryContent.isEmpty()) {
             Toast.makeText(requireContext(), "날짜와 책 이름, 내용을 모두 입력해주세요", Toast.LENGTH_SHORT).show()
             return
@@ -97,7 +104,7 @@ class BookDiaryWriteFragment : Fragment() {
             reviewText = diaryContent
         )
 
-        diaryViewModel.addDiary(bookId,newDiary)
+        diaryViewModel.addDiary(bookId, newDiary)
         clearFields()
         Toast.makeText(requireContext(), "발행이 완료되었습니다", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_bookDiaryWriteFragment_to_readBookFragment)
@@ -120,6 +127,4 @@ class BookDiaryWriteFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
