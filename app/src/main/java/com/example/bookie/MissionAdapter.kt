@@ -1,0 +1,27 @@
+package com.example.bookie.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.bookie.Mission
+import com.example.bookie.R
+
+class MissionAdapter(private val missions: List<Mission>) : RecyclerView.Adapter<MissionAdapter.MissionViewHolder>() {
+
+    inner class MissionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val missionText: TextView = itemView.findViewById(R.id.missionTextView)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MissionViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_mission, parent, false)
+        return MissionViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: MissionViewHolder, position: Int) {
+        holder.missionText.text = missions[position].missionText
+    }
+
+    override fun getItemCount(): Int = missions.size
+}

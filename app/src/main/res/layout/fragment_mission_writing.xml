@@ -48,7 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="미션1. 이 책을 읽으며 가장 기억에 남는 구절은 무엇인가요?"
+        android:text="미션1. 이 책을 읽으며 가장 기억에 남는 구절은 무엇인가요?\n
+                        기억에 남는 한 줄 - 책 제목으로 작성해주세요 !"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
