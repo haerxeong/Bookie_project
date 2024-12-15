@@ -47,6 +47,8 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.3.1")
     implementation(platform("com.google.firebase:firebase-bom:33.7.0")) // Firebase BOM
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation ("com.github.bumptech.glide:glide:4.12.0") // 이미지 바인딩을 위한
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation(libs.androidx.core.ktx)
     implementation("androidx.fragment:fragment-ktx:1.8.5")

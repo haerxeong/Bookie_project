@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.bookie.databinding.ListReadbooksBinding
 
 class ReadBooksAdapter(
@@ -12,9 +13,8 @@ class ReadBooksAdapter(
     private val listener: OnSetWriteClickListener
 ) : RecyclerView.Adapter<ReadBooksAdapter.Holder>() {
 
-    // 글쓰기 버튼 클릭 이벤트를 위한 인터페이스
     interface OnSetWriteClickListener {
-        fun onSetWriteClick(bookId: String) // 클릭된 책 ID 전달
+        fun onSetWriteClick(bookId: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -22,12 +22,10 @@ class ReadBooksAdapter(
         return Holder(binding, listener)
     }
 
-    // 렌더링해주는 역할
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(readbooks[position])
     }
 
-    // view의 아이템 수
     override fun getItemCount() = readbooks.size
 
     class Holder(
@@ -36,7 +34,13 @@ class ReadBooksAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(readbook: MyBook) {
-            binding.imageView.setImageResource(R.drawable.book)
+            if (readbook.bookImageUrl.isNotEmpty()) {
+                Glide.with(binding.root.context)
+                    .load(readbook.bookImageUrl)
+                    .into(binding.imageView)
+            } else {
+                binding.imageView.setImageResource(R.drawable.book)
+            }
             binding.txtTitle.text = readbook.title
             binding.txtAuthor.text = readbook.author
             binding.txtPublisher.text = readbook.publisher
@@ -46,7 +50,6 @@ class ReadBooksAdapter(
                 Toast.makeText(binding.root.context, "제목: ${readbook.title} 작가: ${readbook.author}", Toast.LENGTH_SHORT).show()
             }
 
-            // 글쓰기 버튼 클릭 시 인터페이스 메서드 호출
             binding.btnWrite.setOnClickListener {
                 Log.d("ReadBooksAdapter", "Book clicked, Book ID: ${readbook.id}")
                 listener.onSetWriteClick(readbook.id)

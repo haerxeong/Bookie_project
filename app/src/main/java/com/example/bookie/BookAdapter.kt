@@ -1,17 +1,14 @@
 package com.example.bookie
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.bookie.databinding.ListHomeBookItemBinding
-import com.example.bookie.databinding.ListUnreadbooksBinding
 
 class BookAdapter(private val books: List<MyBook>) : RecyclerView.Adapter<BookAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ListHomeBookItemBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ListHomeBookItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
 
@@ -19,16 +16,22 @@ class BookAdapter(private val books: List<MyBook>) : RecyclerView.Adapter<BookAd
         holder.bind(books[position])
     }
 
-    class Holder(private val binding: ListHomeBookItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(books: MyBook) {
-            binding.bookImage.setImageResource(R.drawable.book)
-            binding.bookTitle.text = books.title
-            binding.bookAuthor.text = books.author
-            binding.bookRelease.text = books.release.toString()
-        }
-    }
-
     override fun getItemCount(): Int {
         return books.size
+    }
+
+    class Holder(private val binding: ListHomeBookItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(book: MyBook) {
+            if (book.bookImageUrl.isNotEmpty()) {
+                Glide.with(binding.root.context)
+                    .load(book.bookImageUrl)
+                    .into(binding.bookImage)
+            } else {
+                binding.bookImage.setImageResource(R.drawable.book)
+            }
+            binding.bookTitle.text = book.title
+            binding.bookAuthor.text = book.author
+            binding.bookRelease.text = book.release.toString()
+        }
     }
 }

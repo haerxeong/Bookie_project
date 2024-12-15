@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.bookie.databinding.ListUnreadbooksBinding
 
 class UnreadBooksAdapter(private var unreadbooks: List<MyBook>, private val listener: OnSetReadClickListener): RecyclerView.Adapter<UnreadBooksAdapter.Holder>() {
@@ -20,7 +21,13 @@ class UnreadBooksAdapter(private var unreadbooks: List<MyBook>, private val list
 
     inner class Holder(private val binding: ListUnreadbooksBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(unreadbook: MyBook) {
-            binding.imageView.setImageResource(R.drawable.book)
+            if (unreadbook.bookImageUrl.isNotEmpty()) {
+                Glide.with(binding.root.context)
+                    .load(unreadbook.bookImageUrl)
+                    .into(binding.imageView)
+            } else {
+                binding.imageView.setImageResource(R.drawable.book)
+            }
             binding.txtTitle.text = unreadbook.title
             binding.txtAuthor.text = unreadbook.author
             binding.txtPublisher.text = unreadbook.publisher
@@ -41,7 +48,6 @@ class UnreadBooksAdapter(private var unreadbooks: List<MyBook>, private val list
         notifyDataSetChanged()
     }
 
-    // interface를 통해 viewmodel에 접근
     interface OnSetReadClickListener {
         fun onSetReadClick(unreadBook: MyBook)
     }
