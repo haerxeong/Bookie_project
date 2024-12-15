@@ -146,4 +146,7 @@ class AddUnreadBookFragment : Fragment() {
             Toast.makeText(requireContext(), "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
         }
     }
+    // realtime에도 저장하고 uri 사용해서 콜백 함수로 이미지 바인딩
+    // 완성도는 별로 중요X. 구현했는지, 리팩토링이 중요. 코드 깔끔하고 가독성 좋아야 함
+    // 코드 이해했는지/깔끔한지. 리팩토링 중요!!!!!!!!
 }
