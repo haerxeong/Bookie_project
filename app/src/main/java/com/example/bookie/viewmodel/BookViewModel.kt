@@ -32,16 +32,12 @@ class BookViewModel : ViewModel() {
 
     // 이미지 URI를 관리하는 변수
     private val _imageUri = MutableLiveData<Uri?>()
-    val imageUri: LiveData<Uri?> get() = _imageUri
 
     // **Create**: 책 추가 -> 사용자가 작성한 MyBook 데이터 객체를 파이어베이스에 upload 해주는 코드
     fun addBook(book: MyBook) {
         val userId = "1" // 실제 사용자 ID를 사용해야 합니다.
         repository.addBook(userId, book)
     }
-
-    // **Read**: 이미 `observeBookList`로 구현됨 (실시간 데이터 관찰)
-    //책 한권을 상세보기 할 일이 없으므로 Read기능은 필요없음 생략할게용
 
     // **Update**: Update book
     private fun updateBook(userId: String = "1", bookId: String, updatedBook: MyBook, attribute: String) { // userId는 임시로 1로 설정
@@ -70,11 +66,11 @@ class BookViewModel : ViewModel() {
     // **Delete**: 책 삭제
     fun deleteBook(bookId: String) {
         val userId = "1" // 실제 사용자 ID를 사용해야 합니다.
+        // Firebase에서 책을 삭제
         repository.deleteBook(userId, bookId)
+
+        // _booklist에서 해당 책을 제거하고 LiveData 갱신
+        _booklist.value = _booklist.value?.filter { it.id != bookId }
     }
 
-    // 이미지 URI 설정
-    fun setImageUri(uri: Uri) {
-        _imageUri.value = uri
-    }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookie.databinding.FragmentBookFeedPageBinding
+import com.example.bookie.repository.BookRepository
 import com.example.bookie.viewmodel.BookDiaryViewModel
 
 
@@ -23,20 +24,17 @@ import com.example.bookie.viewmodel.BookDiaryViewModel
  * 모든 UI 요소는 View를 기반으로 하며, 버튼, 텍스트뷰, 이미지뷰 등은 모두 View 클래스를 상속한 클래스들
  */
 
-
 class BookFeedPageFragment : Fragment() {
 
     val viewModel: BookDiaryViewModel by activityViewModels()
-
-    private var _binding: FragmentBookFeedPageBinding? = null
-    private val binding get() = _binding!!
-
+    // lateinit으로 선언하여 binding을 onCreateView에서 초기화
+    private lateinit var binding: FragmentBookFeedPageBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentBookFeedPageBinding.inflate(inflater,container,false)
+    ): View {
+        binding = FragmentBookFeedPageBinding.inflate(inflater, container, false)
         // RecyclerView 설정
         binding.recFeeds.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
@@ -45,16 +43,14 @@ class BookFeedPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         viewModel.diarylist.observe(viewLifecycleOwner) { diaries ->
-            diaries?.let {
-                if(binding.recFeeds.adapter == null){
-                    binding.recFeeds.adapter = FeedsAdapter(it)
-                }else{
-                    (binding.recFeeds.adapter as FeedsAdapter).notifyDataSetChanged()
+            if (diaries != null) {
+                val adapter = binding.recFeeds.adapter as? FeedsAdapter
+                if (adapter == null) {
+                    binding.recFeeds.adapter = FeedsAdapter(diaries)
+                } else {
+                    adapter.notifyDataSetChanged()
                 }
-
             }
         }
 
@@ -62,10 +58,5 @@ class BookFeedPageFragment : Fragment() {
         binding.recFeeds.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_bookFeedPageFragment)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

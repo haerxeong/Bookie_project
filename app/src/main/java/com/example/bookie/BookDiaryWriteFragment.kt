@@ -15,21 +15,23 @@ import com.example.bookie.databinding.FragmentBookDiaryWriteBinding
 import com.example.bookie.viewmodel.BookDiaryViewModel
 import com.example.bookie.viewmodel.BookViewModel
 
+
+
 class BookDiaryWriteFragment : Fragment() {
 
-    private var _binding: FragmentBookDiaryWriteBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentBookDiaryWriteBinding
+
     private val diaryViewModel: BookDiaryViewModel by activityViewModels()
     private val bookViewModel: BookViewModel by activityViewModels()
 
-    //책의 ID를 저장할 변수
-    private var selectedBookId: String?= null
+    // 책의 ID를 저장할 변수, 동적으로 값이 변할 가능성이 있어서 var
+    private var selectedBookId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBookDiaryWriteBinding.inflate(inflater, container, false)
+        binding = FragmentBookDiaryWriteBinding.inflate(inflater, container, false)
 
         // Bundle에서 전달된 bookId를 받음
         selectedBookId = arguments?.getString("bookId")
@@ -121,10 +123,5 @@ class BookDiaryWriteFragment : Fragment() {
         binding.readingDateInput.text.clear()
         binding.readingBookNameInput.text.clear()
         binding.diaryContentInput.text.clear()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

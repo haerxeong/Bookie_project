@@ -10,17 +10,17 @@ import androidx.lifecycle.Observer
 import com.example.bookie.databinding.FragmentAccountBinding
 import com.example.bookie.viewmodel.UserViewModel
 
+
 class AccountFragment : Fragment() {
 
-    private var _binding: FragmentAccountBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentAccountBinding
     private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAccountBinding.inflate(inflater, container, false)
+        binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -35,10 +35,5 @@ class AccountFragment : Fragment() {
                 binding.textViewId.text = it.username
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -24,14 +24,11 @@ class FeedsAdapter(val bookFeedList: List<BookDiary>)
     }
 
 
-
     class Holder(private val binding: ListFeedsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(bookFeed: BookDiary) {
-            //binding.imageView.setImageResource(bookFeed.profileImageRes)
             binding.imageView.setImageResource(R.drawable.book)
             binding.txtName.text = bookFeed.readDate
             binding.imageButton.setImageResource(R.drawable.book)
-            //binding.imageButton.setImageResource(bookFeed.bookImageRes)
             binding.txtBookName.text = bookFeed.bookName
             binding.textView10.text = bookFeed.reviewText
         }
