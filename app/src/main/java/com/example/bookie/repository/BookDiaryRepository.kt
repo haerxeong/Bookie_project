@@ -42,14 +42,6 @@ class BookDiaryRepository {
         })
     }
 
-    // **Update**: 특정 다이어리 데이터를 업데이트
-    fun updateDiary(userId: String, bookId: String, updatedDiary: BookDiary) {
-        userRef.child(userId).child("posts").child(bookId).setValue(updatedDiary)
-    }
 
-    // **Delete**: 특정 다이어리 데이터를 삭제
-    fun deleteDiary(userId: String, bookId: String) {
-        userRef.child(userId).child("posts").child(bookId).removeValue()
-    }
 
 }

@@ -48,8 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="미션1. 이 책을 읽으며 가장 기억에 남는 구절은 무엇인가요?\n
-                        기억에 남는 한 줄 - 책 제목으로 작성해주세요 !"
+        android:text="미션1. 이 책을 읽으며 가장 기억에 남는 구절은 무엇인가요?\n기억에 남는 한 줄 - 책 제목으로 작성해주세요 !"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,44 +68,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- 미션2: 질문 텍스트 -->
-    <TextView
-        android:id="@+id/mission2Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="미션2. 가장 기억 남는 구절 하나를 뽑아 그 페이지를 사진찍어 공유해주세요!"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mission1EditText" />
 
-    <!-- 미션2: 사진 첨부 기능 -->
-    <LinearLayout
-        android:id="@+id/photoAttachLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/mission2Text"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <!-- 사진 첨부 아이콘 -->
-        <ImageView
-            android:id="@+id/add_photo_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/gallery"
-            android:contentDescription="사진 첨부"
-            android:layout_marginEnd="8dp" />
 
-        <!-- 사진 추가 텍스트 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="사진 추가"
-            android:textSize="16sp"
-            android:gravity="center_vertical" />
-    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

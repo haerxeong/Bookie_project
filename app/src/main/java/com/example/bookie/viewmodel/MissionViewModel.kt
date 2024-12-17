@@ -13,7 +13,7 @@ class MissionViewModel : ViewModel() {
     private val repository = MissionRepository()
 
     init {
-        val userId = "1" // 실제 사용자 ID로 대체 필요
+        val userId = "1"
         loadMissions(userId)
     }
 
@@ -27,13 +27,5 @@ class MissionViewModel : ViewModel() {
         repository.addMissionAndIncrementCookies(userId, mission)
     }
 
-    // 특정 미션 수정
-    fun updateMission(userId: String, missionId: String, updatedMission: Mission) {
-        repository.updateMission(userId, missionId, updatedMission)
-    }
 
-    // 특정 미션 삭제
-    fun deleteMission(userId: String, missionId: String) {
-        repository.deleteMission(userId, missionId)
-    }
 }
