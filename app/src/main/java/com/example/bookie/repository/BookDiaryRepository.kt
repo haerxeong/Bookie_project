@@ -13,12 +13,12 @@ class BookDiaryRepository {
     private val database = Firebase.database
     private val userRef = database.getReference("users")
 
-    // **Create**: 새로운 다이어리 데이터를 추가
+    // 새로운 다이어리 데이터를 추가
     fun addDiary(userId: String, bookId: String, diary: BookDiary) {
         userRef.child(userId).child("diaries").child(bookId).setValue(diary)
     }
 
-    // **Read**: 다이어리 포스트? 목록을 관찰하여 LiveData로 반환
+    //  다이어리 포스트 목록을 관찰하여 LiveData로 반환
     fun observeDiaryList(userId: String, bookDiaryLiveData: MutableLiveData<List<BookDiary>>) {
         userRef.child(userId).child("diaries").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

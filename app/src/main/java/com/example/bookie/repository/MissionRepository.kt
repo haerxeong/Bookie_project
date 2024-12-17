@@ -10,7 +10,7 @@ class MissionRepository {
     private val userRef = database.getReference("users")
 
 
-    // **Read**: 모든 미션 가져오기 (특정 사용자)
+    // 미션 가져오기
     fun getAllMissions(userId: String, missionsLiveData: MutableLiveData<List<Mission>>) {
         userRef.child(userId).child("mission").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -32,7 +32,7 @@ class MissionRepository {
         })
     }
 
-    // **Create + Increment**: 미션 추가와 쿠키 증가
+    // 미션 추가와 쿠키 증가
     fun addMissionAndIncrementCookies(userId: String, mission: Mission) {
         val missionRef = userRef.child(userId).child("mission").push()
         missionRef.setValue(mission).addOnCompleteListener { task ->
